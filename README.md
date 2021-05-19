@@ -7,7 +7,7 @@ Sistema para cadastro de Cartórios com captura das certidões da API da Docket.
 - MapStruct
 - Swagger
 
-#Exigências
+# Exigências
  - [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
  - [Maven](https://maven.apache.org)
 
