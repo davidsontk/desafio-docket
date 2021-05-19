@@ -1,21 +1,16 @@
 package com.desafio.docket.service;
 
+import com.desafio.docket.dto.CartorioCadastroDTO;
 import com.desafio.docket.dto.CartorioDTO;
 import com.desafio.docket.mapper.CartorioMapper;
 import com.desafio.docket.model.Cartorio;
-import com.desafio.docket.model.Certidao;
-import com.desafio.docket.model.Endereco;
 import com.desafio.docket.repository.CartorioRepository;
 import com.desafio.docket.repository.CertidaoRepository;
 import com.desafio.docket.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,9 +18,6 @@ public class CartorioService {
 
     @Autowired
     private CartorioMapper cartorioMapper;
-
-    @Autowired
-    private CertidaoDocketService certidaoDocketService;
 
     @Autowired
     private CertidaoRepository certidaoRepository;
@@ -36,6 +28,10 @@ public class CartorioService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    public CartorioDTO prepararESalvarCartorio (CartorioCadastroDTO cartorioCadastroDTO) {
+        return salvarCartorio(cartorioMapper.converterParaCartorioDTO(cartorioCadastroDTO));
+    }
+
     public CartorioDTO salvarCartorio (CartorioDTO cartorioDTO) {
         Cartorio cartorio = cartorioMapper.converterParaCartorio(cartorioDTO);
         cartorio.setEndereco(enderecoRepository.save(cartorio.getEndereco()));
@@ -45,8 +41,10 @@ public class CartorioService {
     }
 
     public void deletarCartorio (Integer idCartorio) {
-
+        Optional<Cartorio> cartorio = cartorioRepository.findById(idCartorio);
         cartorioRepository.deleteById(idCartorio);
+        enderecoRepository.delete(cartorio.get().getEndereco());
+
     }
 
     public CartorioDTO buscarCartorio (Integer idCartorio) {

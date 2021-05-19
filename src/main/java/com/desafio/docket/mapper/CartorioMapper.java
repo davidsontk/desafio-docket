@@ -1,5 +1,6 @@
 package com.desafio.docket.mapper;
 
+import com.desafio.docket.dto.CartorioCadastroDTO;
 import com.desafio.docket.dto.CartorioDTO;
 import com.desafio.docket.model.Cartorio;
 import org.mapstruct.Mapper;
@@ -10,4 +11,6 @@ public interface CartorioMapper {
     Cartorio converterParaCartorio(CartorioDTO cartorioDTO);
 
     CartorioDTO converterParaCartorioDTO(Cartorio cartorio);
+
+    CartorioDTO converterParaCartorioDTO(CartorioCadastroDTO cartorioCadastroDTO);
 }
